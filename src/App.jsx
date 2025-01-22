@@ -2,8 +2,13 @@ import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  
+  const [todos, setTodos] = useState(() => {
+    const localStoredItem = JSON.parse(localStorage.getItem("todos"));
+    return localStoredItem || [];
+  });
   const [input, setInput] = useState("");
+
 
   useEffect(() => {
     const localStoredItem = JSON.parse(localStorage.getItem("todos"));
@@ -15,7 +20,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos])
-  console.log([todos]);
+
 
   const addTodo = () => {
     if (input.trim()){
